@@ -6,13 +6,14 @@
 <meta name="theme-color" content="#f7f7fb">
 <title>Beat the Time | Young Influencers GY</title>
 <meta name="description" content="A gentle goal and habit tracker for Young Influencers GY.">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="icon" href="./favicon.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="./beat-the-time.jpg">
 <link rel="stylesheet" href="./style.css">
 <script src="./app.js" defer></script>
 </head>
 <body>
 <aside class="sidebar">
-  <a class="brand" href="#today"><span class="logo" data-icon="timer"></span><span>Beat the Time</span></a>
+  <a class="brand" href="#today"><img class="logo" src="./beat-the-time.jpg" width="52" height="52" alt=""><span>Beat the Time</span></a>
   <nav aria-label="Main navigation" id="nav"></nav>
   <div class="side-bottom">
     <div class="demo"><span data-icon="flask"></span><div><strong>Demo workspace</strong><small>Changes stay in this browser.</small></div></div>
@@ -20,7 +21,7 @@
   </div>
 </aside>
 <main>
-  <header class="top"><span id="top-label">Overview</span><div class="top-actions"><button id="mobile-settings" class="icon-button" aria-label="Demo settings" data-icon="settings"></button><button id="translate" class="translation" aria-label="Translation"><span data-icon="globe"></span><span id="language" aria-hidden="true">Translation</span></button></div></header>
+  <header class="top"><div class="top-brand"><a class="mobile-brand" href="#today" aria-label="Beat the Time home"><img class="logo" src="./beat-the-time.jpg" width="44" height="44" alt=""></a><span id="top-label">Overview</span></div><div class="top-actions"><button id="mobile-settings" class="icon-button" aria-label="Demo settings" data-icon="settings"></button><button id="translate" class="translation" aria-label="Translation"><span data-icon="globe"></span><span id="language" aria-hidden="true">Translation</span></button></div></header>
   <div class="content" id="content"></div>
   <footer class="site-footer">Built for <a href="https://www.youtube.com/@YoungInfluencersGY">Young Influencers GY</a></footer>
 </main>
