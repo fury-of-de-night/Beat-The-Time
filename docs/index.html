@@ -24,7 +24,14 @@
 <main>
   <header class="top"><div class="top-brand"><a class="mobile-brand" href="#today" aria-label="Beat the Time home"><img class="logo" src="./beat-the-time.jpg" width="44" height="44" alt=""></a><span id="top-label">Overview</span></div><div class="top-actions"><button id="mobile-settings" class="icon-button" aria-label="Demo settings" data-icon="settings"></button><button id="translate" class="translation" aria-label="Translation"><span data-icon="globe"></span><span id="language" aria-hidden="true">Translation</span></button></div></header>
   <div class="content" id="content"></div>
-  <footer class="site-footer">Built for <a href="https://www.youtube.com/@YoungInfluencersGY">Young Influencers GY</a></footer>
+  <footer class="site-footer">
+    <p id="social-links-label">Visit our social media pages</p>
+    <div class="footer-social-links" role="group" aria-labelledby="social-links-label">
+      <a href="https://www.youtube.com/@YoungInfluencersGY">YouTube</a>
+      <a href="https://facebook.com/younginfluencersgy">Facebook</a>
+      <a href="https://instagram.com/younginfluencersgy/?hl=en">Instagram</a>
+    </div>
+  </footer>
 </main>
 <dialog id="editor"><form id="form"><div class="dialog-head"><h2 id="form-title"></h2><button type="button" class="icon-button" id="close" aria-label="Close" data-icon="x"></button></div><div id="fields"></div><p class="error" id="error" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary" id="cancel">Cancel</button><button class="primary" id="submit">Save</button></div></form></dialog>
 <div id="toast" role="status" class="toast"></div>

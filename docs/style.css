@@ -37,3 +37,6 @@ dialog{width:min(92vw,460px);max-height:90dvh;border:1px solid var(--border);bor
   .toast { bottom: 102px; }
   .page-head { flex-wrap: wrap; }
 }
+
+.footer-social-links { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.footer-social-links a { padding-inline: 4px; }
