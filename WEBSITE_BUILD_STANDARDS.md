@@ -288,3 +288,22 @@ Keep the final explanation concise and practical:
 Save reusable setup and operating instructions in the repository. Prefer finishing
 an authorized task over repeatedly asking whether to continue. Respect existing
 work and avoid unrelated rewrites or feature expansion.
+
+## 14. Visual direction for websites and apps
+
+Follow the approved design for each product. Keep its established color scheme and
+supplied artwork. For new screens, favor flat colors and use gradients sparingly
+when they suit a specific part of the design.
+
+- Set a clear type hierarchy and spacing grid before laying out screens. Use a
+  distinctive display face where it suits the product and a readable face for
+  controls, body text, and numeric content.
+- Use crisp borders and small corner radii where they suit the approved design.
+  Avoid giving every section a shadow, badge, or card.
+- Give the main task more visual weight using alignment, whitespace, and an
+  asymmetric split where useful. Stack sections in task order on narrow screens.
+- Use supplied artwork, real product imagery, or typography. Use icons where
+  they help someone recognize or operate a control.
+- Write direct labels and explain only what people need to act. Keep focus
+  indicators, contrast, touch targets, and reduced-motion behavior across
+  browser and native screens.

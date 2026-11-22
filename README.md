@@ -21,3 +21,12 @@ production Supabase backend, which would own all business rules.
 In the repository's Pages settings, select **Deploy from a branch** and use
 `main`. The `/ (root)` source opens the demo via a redirect to `/docs/`.
 The `/docs` source serves the same demo directly from the project URL.
+
+## Try the social demo
+
+Open Groups, Friends, or Daily motivation. Use **Switch sample account** to test
+different audiences, accept requests, and review quotes or reports as the sample
+admin. Use sample phone numbers and group invites only. Social data and simulated
+accounts are stored in this browser. Live messaging, account identity, moderation,
+and privacy enforcement require a backend. A copied demo group link can reopen a
+local group in the same browser.
