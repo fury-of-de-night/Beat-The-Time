@@ -1,19 +1,9 @@
 'use strict';
 
 const paths = {
-  timer:'<circle cx="12" cy="14" r="8"/><path d="M10 2h4m-2 4V2m6 5 2-2m-8 5v4l3 2"/>',
-  home:'<path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-6h6v6"/>',
-  check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
-  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
-  habit:'<path d="M20 7H6l3-3M4 17h14l-3 3M4 14v3m16-7V7"/>',
-  tasks:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>',
-  flask:'<path d="M9 3h6m-5 0v7l-5 8a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-8V3M8 15h8"/>',
   settings:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/>',
   globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
   plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="m6 6 12 12M6 18 18 6"/>',
-  arrow:'<path d="M4 12h15m-6-6 6 6-6 6"/>',
-  spark:'<path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/>',
-  bolt:'<path d="m13 2-9 12h7l-1 8 10-12h-7z"/>'
 };
 const icon = name => `<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths[name]}</svg>`;
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[char]);
@@ -75,11 +65,11 @@ let state = read();
 let saveAction;
 let toastTimer;
 const routes = [
-  ['today','Today','home','Overview'],
-  ['check-in','Check-in','check','Check-in'],
-  ['goals','Goals','target','Goals'],
-  ['habits','Habits','habit','Habits'],
-  ['tasks','To-dos','tasks','To-dos']
+  ['today','Today','Overview'],
+  ['check-in','Check-in','Check-in'],
+  ['goals','Goals','Goals'],
+  ['habits','Habits','Habits'],
+  ['tasks','To-dos','To-dos']
 ];
 const statusNames = {done:'Done',partial:'Partial',missed:'Missed'};
 const rewards = {done:10,partial:5,missed:0};
@@ -134,28 +124,40 @@ function save(next,message) {
 }
 const button = (label, action, style = 'secondary', symbol = '') => `<button type="button" class="${style}" data-action="${action}">${symbol ? icon(symbol) : ''}${label}</button>`;
 const empty = text => `<p class="empty">${text}</p>`;
-const heading = (title,subtitle,action = '',eyebrow = '') => `<div class="page-head"><div>${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h1>${title}</h1><p class="sub">${subtitle}</p><small class="mobile-demo">Demo · Changes stay in this browser.</small></div>${action}</div>`;
+const heading = (title,subtitle,action = '',eyebrow = '') => `<div class="page-head"><div>${eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : ''}<h1>${title}</h1>${subtitle ? `<p class="sub">${subtitle}</p>` : ''}<small class="mobile-demo">Demo · Changes stay in this browser.</small></div>${action}</div>`;
 const panel = (title, rows, link = '') => `<section class="panel"><div class="panel-head"><h2>${title}</h2>${link}</div>${rows}</section>`;
 function entryRow(item) {
   const log = todayLog(item.id);
   const habit = Boolean(item.frequency);
-  return `<div class="row"><span class="badge ${habit ? '' : 'green'}">${icon(habit ? 'habit' : 'target')}</span><div class="row-body"><h3>${esc(item.title)}</h3><small>${habit ? meta(item) : 'Goal · ' + shortDate(item.date)}</small></div>${log ? `<span class="done">${statusNames[log.status]}</span>` : button('Check in','log:'+item.id)}</div>`;
+  return `<div class="row"><div class="row-body"><h3>${esc(item.title)}</h3><small>${habit ? meta(item) : 'Goal · ' + shortDate(item.date)}</small></div>${log ? `<span class="done">${statusNames[log.status]}</span>` : button('Check in','log:'+item.id)}</div>`;
 }
 function goalRow(goal) {
   const value = progress(goal.id);
   return `<div class="goal"><div class="goal-label"><h3><a href="#goals/${goal.id}">${esc(goal.title)}</a></h3><span>${value.percent}%</span></div><progress max="100" value="${value.percent}" aria-label="${esc(goal.title)} progress"></progress><small>${value.done} of ${value.total} to-dos · ${goal.status === 'completed' ? 'Completed' : shortDate(goal.date)}</small></div>`;
 }
 const taskRow = task => `<div class="row"><label class="task-label"><input type="checkbox" data-task="${task.id}" ${task.done ? 'checked' : ''}><span>${esc(task.title)}</span></label></div>`;
-const logRow = log => `<div class="row"><span class="badge green">${icon('check')}</span><div class="row-body"><h3>${esc(findItem(log.item)?.title)}</h3><small>${shortDate(log.date)} · ${statusNames[log.status]}${rewards[log.status] ? ' · +' + rewards[log.status] + ' points' : ''}</small>${log.note ? `<small class="note">${esc(log.note)}</small>` : ''}</div></div>`;
+const logRow = log => `<div class="row"><div class="row-body"><h3>${esc(findItem(log.item)?.title)}</h3><small>${shortDate(log.date)} · ${statusNames[log.status]}${rewards[log.status] ? ' · +' + rewards[log.status] + ' points' : ''}</small>${log.note ? `<small class="note">${esc(log.note)}</small>` : ''}</div></div>`;
 const activeGoals = () => state.goals.filter(goal => goal.status === 'active');
 const checkItems = () => [...state.habits.filter(habit => habit.frequency === 'daily' || todayLog(habit.id) || !state.logs.some(log => log.item === habit.id && log.date >= weekStart(today()))),...activeGoals()];
 function dashboard() {
-  const values = stats();
-  const cards = [['Weekly points','bolt',''],['Check-ins this week','check','green'],['Goals in progress','target','peach']];
-  return heading('Your daily overview','Track your habits and see how your goals are progressing.',button('New goal','goal','primary','plus'),fullDate())
-    + `<section class="hero"><div class="orbit" aria-hidden="true"><span>${icon('timer')}</span></div><p class="kicker">${icon('spark')} ${state.mode === 'gentle' ? 'GENTLE MODE' : 'STRICT MODE'}</p><h2>Progress at your pace.</h2><p>${state.mode === 'gentle' ? 'Miss a day? Your streak can wait. Check in whenever you’re ready.' : 'Stay on track with your daily and weekly check-ins.'}</p><a class="hero-button" href="#check-in">Daily check-in ${icon('arrow')}</a></section>`
-    + `<div class="stats">${cards.map(([label,name,color],index) => `<div class="stat"><span class="badge ${color}">${icon(name)}</span><div><strong>${values[index]}</strong><small>${label}</small></div></div>`).join('')}</div>`
-    + `<div class="grid">${panel('Ready to check in',checkItems().slice(0,3).map(entryRow).join('') || empty('Add a habit or goal to get started.'),'<a href="#check-in">View all →</a>')}${panel('Goal progress',activeGoals().slice(0,3).map(goalRow).join('') || empty('Your active goals will appear here.'),'<a href="#goals">View goals →</a>')}</div>`;
+  const [points, checkins, goals] = stats();
+  const mode = state.mode === 'gentle'
+    ? 'Gentle mode · A missed day pauses your streak.'
+    : 'Strict mode · A missed period resets your streak.';
+  return heading('Today','',button('New goal','goal','primary','plus'),fullDate())
+    + `<div class="dashboard-grid">
+      ${panel('Today’s check-ins',checkItems().map(entryRow).join('') || empty('Add a habit or goal to get started.'),'<a href="#check-in">Check-in history</a>')}
+      <section class="ledger" aria-labelledby="ledger-title">
+        <h2 id="ledger-title">This week</h2>
+        <dl>
+          <div class="ledger-points"><dt>Points earned</dt><dd>${points}</dd></div>
+          <div class="ledger-line"><dt>Completed check-ins</dt><dd>${checkins}</dd></div>
+          <div class="ledger-line"><dt>Active goals</dt><dd>${goals}</dd></div>
+        </dl>
+        <p class="mode">${mode}</p>
+      </section>
+      <div class="dashboard-goals">${panel('Goal progress',activeGoals().slice(0,3).map(goalRow).join('') || empty('Your active goals will appear here.'),'<a href="#goals">All goals</a>')}</div>
+    </div>`;
 }
 function view(route, detail) {
   if (route === 'check-in') return heading('Daily check-in','Reflect on your habits and goals for today.')
@@ -170,7 +172,7 @@ function view(route, detail) {
   if (route === 'goals') return heading('Goals','Set a deadline and break your goal into smaller steps.',button('New goal','goal','primary','plus'))
     + panel('Your goals',state.goals.map(goalRow).join('') || empty('Create a goal to get started.'));
   if (route === 'habits') return heading('Habits','Track recurring actions and build your streak.',button('New habit','habit','primary','plus'))
-    + panel('Your habits',state.habits.map(habit => `<div class="row"><span class="badge">${icon('habit')}</span><div class="row-body"><h3>${esc(habit.title)}</h3><small>${meta(habit)}</small></div>${button('Edit','habit:'+habit.id)}</div>`).join('') || empty('Create a habit to get started.'));
+    + panel('Your habits',state.habits.map(habit => `<div class="row"><div class="row-body"><h3>${esc(habit.title)}</h3><small>${meta(habit)}</small></div>${button('Edit','habit:'+habit.id)}</div>`).join('') || empty('Create a habit to get started.'));
   if (route === 'tasks') return heading('To-dos','Finish standalone tasks or link them to a goal.',button('New to-do','task','primary','plus'))
     + panel('Open to-dos',state.tasks.filter(task => !task.done).map(taskRow).join('') || empty('You’re all caught up.'))
     + '<div class="section"></div>' + panel('Completed',state.tasks.filter(task => task.done).map(taskRow).join('') || empty('Completed tasks will appear here.'));
@@ -179,8 +181,8 @@ function view(route, detail) {
 function render() {
   const [requested,detail] = location.hash.slice(1).split('/');
   const current = routes.find(route => route[0] === requested) || routes[0];
-  $('#top-label').textContent = current[3];
-  $('#nav').innerHTML = routes.map(([name,label,symbol]) => `<a class="nav-link" href="#${name}" ${current[0] === name ? 'aria-current="page"' : ''}>${icon(symbol)}${label}</a>`).join('');
+  $('#top-label').textContent = current[2];
+  $('#nav').innerHTML = routes.map(([name,label]) => `<a class="nav-link" href="#${name}" ${current[0] === name ? 'aria-current="page"' : ''}>${label}</a>`).join('');
   $('#content').innerHTML = view(current[0],detail);
 }
 function openEditor(title,label,fields,action) {
