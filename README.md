@@ -18,6 +18,6 @@ production Supabase backend, which would own all business rules.
 
 ## Publish to GitHub Pages
 
-In the repository's Pages settings, select **Deploy from a branch** and set
-the source to `main` and `/docs`. All assets use paths relative to the page
-so the demo works at the project's GitHub Pages URL.
+In the repository's Pages settings, select **Deploy from a branch** and use
+`main`. The `/ (root)` source opens the demo via a redirect to `/docs/`.
+The `/docs` source serves the same demo directly from the project URL.
